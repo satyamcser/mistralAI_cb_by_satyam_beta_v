@@ -1,4 +1,4 @@
-# mistralAI_cb_by_satyam_beta_v
+# Mistral_AI_CB_by_Satyam_Beta_V
 
 ---
 
