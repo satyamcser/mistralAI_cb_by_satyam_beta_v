@@ -1,7 +1,7 @@
 # mistralAI_cb_by_satyam_beta_v
 
 ---
-license: mit
+
 ---
 # Step 1: Clone the Repository
 
