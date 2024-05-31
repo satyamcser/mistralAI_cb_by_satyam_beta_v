@@ -11,6 +11,8 @@ def query(payload):
     print("Debug: API Key:", api_key)  # Debugging line for API key
     print("Debug: Payload being sent to the API:", payload)  # Debugging line for payload
     response = requests.post(API_URL, headers=headers, json=payload)
+    print("Debug: Response status code:", response.status_code)  # Debugging line for status code
+    print("Debug: Response content:", response.content)  # Debugging line for response content
     try:
         response.raise_for_status()
         return response.json()
@@ -20,11 +22,6 @@ def query(payload):
         return {"error": str(e)}
 
 st.set_page_config(page_title="💬 MistralAI Chatbot by Satyam")
-
-with st.sidebar:
-    st.header("💬 MistralAI Chatbot by Satyam")
-    temperature = st.slider("Temperature", 0.0, 1.0, 0.5)
-    max_length = st.slider("Max Length", 10, 100, 50)
 
 if "history" not in st.session_state:
     st.session_state.history = []
