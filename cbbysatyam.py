@@ -1,12 +1,9 @@
 import streamlit as st
 import requests
-import toml
 
-# Load the configuration from the TOML file
-config = toml.load("config.toml")
-
-API_URL = config["api"]["url"]
-headers = {"Authorization": config["headers"]["Authorization"]}
+# Define the API URL and headers directly
+API_URL = "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3"
+headers = {"Authorization": "Bearer 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"}
 
 def query(payload):
     response = requests.post(API_URL, headers=headers, json=payload)
