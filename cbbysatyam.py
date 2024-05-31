@@ -8,7 +8,8 @@ api_key = os.getenv("HF_API_KEY")
 headers = {"Authorization": f"Bearer {api_key}"}
 
 def query(payload):
-    print("Debug: Payload being sent to the API:", payload)  # Add this line for debugging
+    print("Debug: API Key:", api_key)  # Debugging line for API key
+    print("Debug: Payload being sent to the API:", payload)  # Debugging line for payload
     response = requests.post(API_URL, headers=headers, json=payload)
     try:
         response.raise_for_status()
@@ -33,13 +34,7 @@ prompt = st.text_input("You: ")
 if st.button("Send"):
     if prompt:
         with st.spinner("Thinking..."):
-            payload = {
-                "inputs": prompt,
-                "parameters": {
-                    "temperature": temperature,
-                    "max_length": max_length
-                }
-            }
+            payload = {"inputs": prompt}
             output = query(payload)
             st.write("Debug: Output from API", output)  # Debugging line
             
@@ -59,3 +54,6 @@ for chat in st.session_state.history[-10:]:
 
 if st.button("Clear history"):
     st.session_state.history = []
+
+# Temporary debug line to check if the environment variable is being read correctly
+st.write(f"Debug: API Key Loaded: {api_key is not None}")
