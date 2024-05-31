@@ -8,6 +8,7 @@ api_key = os.getenv("HF_API_KEY")
 headers = {"Authorization": f"Bearer {api_key}"}
 
 def query(payload):
+    print("Debug: Payload being sent to the API:", payload)  # Add this line for debugging
     response = requests.post(API_URL, headers=headers, json=payload)
     try:
         response.raise_for_status()
