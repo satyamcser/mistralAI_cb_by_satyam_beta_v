@@ -1,9 +1,11 @@
 import streamlit as st
 import requests
+import os
 
-# Define the API URL and headers directly
+# Get the API token from environment variables
 API_URL = "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3"
-headers = {"Authorization": "Bearer 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"}
+api_key = os.getenv("HF_API_KEY")
+headers = {"Authorization": f"Bearer {api_key}"}
 
 def query(payload):
     response = requests.post(API_URL, headers=headers, json=payload)
