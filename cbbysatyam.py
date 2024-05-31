@@ -1,8 +1,12 @@
 import streamlit as st
 import requests
+import toml
 
-API_URL = "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3"
-headers = {"Authorization": "Bearer hf_*******************************************"}  # Replace with your actual API key
+# Load the configuration from the TOML file
+config = toml.load("config.toml")
+
+API_URL = config["api"]["url"]
+headers = {"Authorization": config["headers"]["Authorization"]}
 
 def query(payload):
     response = requests.post(API_URL, headers=headers, json=payload)
@@ -19,6 +23,7 @@ st.set_page_config(page_title="💬 MistralAI Chatbot by Satyam")
 with st.sidebar:
     st.header("💬 MistralAI Chatbot by Satyam")
     temperature = st.slider("Temperature", 0.0, 1.0, 0.5)
+    max_length = st.slider("Max Length", 10, 100, 50)
 
 if "history" not in st.session_state:
     st.session_state.history = []
@@ -28,7 +33,13 @@ prompt = st.text_input("You: ")
 if st.button("Send"):
     if prompt:
         with st.spinner("Thinking..."):
-            payload = {"inputs": prompt}
+            payload = {
+                "inputs": prompt,
+                "parameters": {
+                    "temperature": temperature,
+                    "max_length": max_length
+                }
+            }
             output = query(payload)
             st.write("Debug: Output from API", output)  # Debugging line
             
